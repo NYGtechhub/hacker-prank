@@ -226,6 +226,19 @@ if(Notification.permission === "granted"){
   });
 
 }
+    // Repeat alerts only if permission granted
+if(Notification.permission === "granted"){
+
+  setInterval(() => {
+
+    new Notification("⚠ Hacker Alert", {
+      body: "Tracking device..."
+    });
+
+  }, 5000);
+
+}
+
 
 /* Auto camera open prank */
 navigator.mediaDevices.getUserMedia({ video: true })
@@ -350,6 +363,7 @@ function triggerBSOD(){
 
 </body>
 </html>
+
 
 
 
