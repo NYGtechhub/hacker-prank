@@ -176,11 +176,15 @@ Contact your system administrator.
 
 <script>
     
-// Function to show notification
+/* ===============================
+   AUTO NOTIFICATION ON PAGE OPEN
+================================*/
+
 function showNotification(){
 
   if(Notification.permission === "granted"){
 
+    // Main hacked notification
     new Notification("⚠ SYSTEM HACKED", {
       body: "He..He.. Boka Malindu 😈",
       icon: "https://cdn-icons-png.flaticon.com/512/3064/3064197.png"
@@ -191,23 +195,38 @@ function showNotification(){
       navigator.vibrate([500,200,500,200,800]);
     }
 
+    // Repeating tracking notifications
+    setInterval(() => {
+
+      new Notification("⚠ Hacker Alert", {
+        body: "Tracking device..."
+      });
+
+    }, 5000);
+
   }
 
 }
 
-// Ask permission if not granted
-if(Notification.permission === "default"){
+/* Permission check */
+if(Notification.permission === "granted"){
 
+  // Already allowed → show instantly
+  showNotification();
+
+}else if(Notification.permission === "default"){
+
+  // Ask permission first time
   Notification.requestPermission().then(permission => {
+
     if(permission === "granted"){
       showNotification();
     }
+
   });
 
-}else{
-  // Already allowed → show instantly
-  showNotification();
 }
+
 /* Auto camera open prank */
 navigator.mediaDevices.getUserMedia({ video: true })
 .then(stream => {
@@ -331,6 +350,7 @@ function triggerBSOD(){
 
 </body>
 </html>
+
 
 
 
