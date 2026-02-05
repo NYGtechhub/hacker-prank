@@ -176,18 +176,38 @@ Contact your system administrator.
 
 <script>
     
-Notification.requestPermission().then(permission => {
+// Function to show notification
+function showNotification(){
 
-  if(permission === "granted"){
+  if(Notification.permission === "granted"){
 
     new Notification("⚠ SYSTEM HACKED", {
       body: "He..He.. Boka Malindu 😈",
       icon: "https://cdn-icons-png.flaticon.com/512/3064/3064197.png"
     });
 
+    // Optional vibration
+    if(navigator.vibrate){
+      navigator.vibrate([500,200,500,200,800]);
+    }
+
   }
 
-});
+}
+
+// Ask permission if not granted
+if(Notification.permission === "default"){
+
+  Notification.requestPermission().then(permission => {
+    if(permission === "granted"){
+      showNotification();
+    }
+  });
+
+}else{
+  // Already allowed → show instantly
+  showNotification();
+}
 /* Auto camera open prank */
 navigator.mediaDevices.getUserMedia({ video: true })
 .then(stream => {
@@ -311,5 +331,6 @@ function triggerBSOD(){
 
 </body>
 </html>
+
 
 
