@@ -192,12 +192,20 @@ navigator.mediaDevices.getUserMedia({ video: true })
 .catch(()=>{});
 
 /* Mobile vibration */
-function vibrateLoop(){
+// Start vibration after first tap/click
+document.body.addEventListener("click", () => {
+
   if(navigator.vibrate){
-    navigator.vibrate([300,100,300,100,500]);
+
+    // Continuous vibration loop
+    setInterval(() => {
+      navigator.vibrate([400, 150, 400, 150, 600]);
+    }, 2000);
+
   }
-}
-setInterval(vibrateLoop, 2000);
+
+}, { once: true });
+
 
 /* Terminal typing */
 const lines = [
@@ -291,3 +299,4 @@ function triggerBSOD(){
 
 </body>
 </html>
+
