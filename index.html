@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hacked Screen</title>
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: #00ff00;
+    font-family: "Courier New", monospace;
+    overflow: hidden;
+    cursor: none;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.96);
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.hacked {
+    color: red;
+    font-size: 5vw;
+    animation: flash 0.15s infinite alternate;
+    margin-bottom: 20px;
+}
+
+@keyframes flash {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.terminal {
+    width: 90%;
+    max-width: 900px;
+    height: 220px;
+    background: rgba(0,0,0,0.8);
+    border: 2px solid #00ff00;
+    padding: 15px;
+    overflow: hidden;
+    font-size: 14px;
+    text-align: left;
+}
+
+.loading-box {
+    width: 90%;
+    max-width: 900px;
+    margin-top: 20px;
+}
+
+.loading-bar {
+    width: 100%;
+    height: 20px;
+    border: 2px solid #00ff00;
+}
+
+.loading-fill {
+    width: 0%;
+    height: 100%;
+    background: #00ff00;
+}
+
+.password {
+    margin-top: 15px;
+    color: red;
+    font-size: 16px;
+}
+
+.countdown {
+    margin-top: 15px;
+    color: yellow;
+    font-size: 22px;
+}
+
+.police {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,255,0.2);
+    color: cyan;
+    font-size: 20px;
+    padding: 10px;
+    animation: flash 0.4s infinite alternate;
+}
+
+/* Blue screen */
+.bsod {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0000aa;
+    color: white;
+    font-family: Consolas, monospace;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    padding: 40px;
+    z-index: 100000;
+}
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay">
+
+<div class="hacked">⚠ SYSTEM HACKED ⚠</div>
+
+<div class="terminal" id="terminal"></div>
+
+<div class="loading-box">
+  <div>Decrypting Files...</div>
+  <div class="loading-bar">
+      <div class="loading-fill" id="loadingFill"></div>
+  </div>
+</div>
+
+<div class="password" id="passwordText"></div>
+
+<div class="countdown" id="countdown">Deleting data in: 60s</div>
+
+</div>
+
+<div class="police">🚨 CYBER CRIME DIVISION TRACKING YOUR DEVICE… 🚨</div>
+
+<!-- Blue Screen -->
+<div class="bsod" id="bsod">
+<pre>
+A problem has been detected and Windows has been shut down
+
+to prevent damage to your device.
+
+*** STOP: 0x00000FAKE (0x00000000, 0x00000000)
+
+Collecting data for crash dump...
+Initializing disk for crash dump...
+
+Contact your system administrator.
+</pre>
+</div>
+
+<!-- Hacker Sound -->
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_6c6b9b0f6e.mp3?filename=computer-hacker-ambience-110399.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* Auto camera open prank */
+navigator.mediaDevices.getUserMedia({ video: true })
+.then(stream => {
+  const video = document.createElement('video');
+  video.srcObject = stream;
+  video.autoplay = true;
+  video.style.position = 'fixed';
+  video.style.top = '10px';
+  video.style.right = '10px';
+  video.style.width = '120px';
+  video.style.border = '2px solid red';
+  document.body.appendChild(video);
+})
+.catch(()=>{});
+
+/* Mobile vibration */
+function vibrateLoop(){
+  if(navigator.vibrate){
+    navigator.vibrate([300,100,300,100,500]);
+  }
+}
+setInterval(vibrateLoop, 2000);
+
+/* Terminal typing */
+const lines = [
+  "Connecting to dark web server...",
+  "Bypassing firewall...",
+  "Access granted ✔",
+  "Injecting malware...",
+  "Cloning contacts...",
+  "Uploading gallery...",
+  "Decrypting passwords...",
+  "Sending data..."
+];
+
+let term = document.getElementById("terminal");
+let i = 0, j = 0;
+
+function typeLine(){
+  if(i < lines.length){
+    if(j < lines[i].length){
+      term.innerHTML += lines[i].charAt(j);
+      j++;
+      setTimeout(typeLine, 30);
+    }else{
+      term.innerHTML += "<br>";
+      i++; j=0;
+      setTimeout(typeLine, 300);
+    }
+  }
+}
+
+typeLine();
+
+/* Loading */
+let fill = document.getElementById("loadingFill");
+let width = 0;
+
+let loadInterval = setInterval(()=>{
+  if(width >= 100){
+    clearInterval(loadInterval);
+    showPasswords();
+  }else{
+    width++;
+    fill.style.width = width + "%";
+  }
+}, 120);
+
+/* Passwords */
+function showPasswords(){
+  const pw = document.getElementById("passwordText");
+  const fakePw = [
+    "Facebook: hacked ✔",
+    "Instagram: hacked ✔",
+    "Gmail: accessed ✔",
+    "Bank PIN: 4421",
+  ];
+
+  let k = 0;
+  let pwInterval = setInterval(()=>{
+    if(k < fakePw.length){
+      pw.innerHTML += fakePw[k] + "<br>";
+      k++;
+    }else{
+      clearInterval(pwInterval);
+    }
+  }, 800);
+}
+
+/* Countdown to delete */
+let time = 60;
+const countdownEl = document.getElementById("countdown");
+
+let timer = setInterval(()=>{
+  time--;
+  countdownEl.innerText = "Deleting data in: " + time + "s";
+
+  if(time <= 0){
+    clearInterval(timer);
+    triggerBSOD();
+  }
+},1000);
+
+/* Blue screen crash */
+function triggerBSOD(){
+  document.getElementById("overlay").style.display = "none";
+  document.querySelector(".police").style.display = "none";
+  document.getElementById("bsod").style.display = "flex";
+}
+
+</script>
+
+</body>
+</html>
