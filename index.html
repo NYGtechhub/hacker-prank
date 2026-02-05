@@ -118,13 +118,12 @@ body {
     animation: flash 0.5s infinite alternate;
 }
 .receiver {
-    color: red;       /* You can choose any color */
-    font-size: 20px;  /* Adjust size as needed */
+    color: red;
+    font-size: 20px;
     margin-top: 10px;
     font-family: "Courier New", monospace;
     opacity: 0.9;
 }
-
 </style>
 </head>
 <body>
@@ -175,72 +174,56 @@ Contact your system administrator.
 </audio>
 
 <script>
-    
 /* ===============================
-   AUTO NOTIFICATION ON PAGE OPEN
+   NOTIFICATION + VIBRATION
 ================================*/
 
 function showNotification(){
 
   if(Notification.permission === "granted"){
 
-    // Main hacked notification
     new Notification("⚠ SYSTEM HACKED", {
       body: "He..He.. Boka Malindu 😈",
       icon: "https://cdn-icons-png.flaticon.com/512/3064/3064197.png"
     });
 
-    // Optional vibration
     if(navigator.vibrate){
       navigator.vibrate([500,200,500,200,800]);
     }
 
-    // Repeating tracking notifications
+    // Repeat alert
     setInterval(() => {
-
-      new Notification("⚠ Hacker Alert", {
-        body: "Tracking device..."
-      });
-
+      new Notification("⚠ Hacker Alert", { body:"Tracking device..." });
     }, 5000);
 
   }
 
 }
 
-/* Permission check */
+// Permission check
 if(Notification.permission === "granted"){
-
-  // Already allowed → show instantly
   showNotification();
-
 }else if(Notification.permission === "default"){
-
-  // Ask permission first time
-  Notification.requestPermission().then(permission => {
-
-    if(permission === "granted"){
+  Notification.requestPermission().then(permission=>{
+    if(permission==="granted"){
       showNotification();
     }
-
   });
-
-}
-    // Repeat alerts only if permission granted
-if(Notification.permission === "granted"){
-
-  setInterval(() => {
-
-    new Notification("⚠ Hacker Alert", {
-      body: "Tracking device..."
-    });
-
-  }, 5000);
-
 }
 
+// Auto vibration loop on tap
+document.body.addEventListener("click", () => {
+  if(navigator.vibrate){
+    setInterval(() => {
+      navigator.vibrate([400,150,400,150,600]);
+    }, 2000);
+  }
+}, {once:true});
 
-/* Auto camera open prank */
+
+/* ===============================
+   CAMERA PRANK
+================================*/
 navigator.mediaDevices.getUserMedia({ video: true })
 .then(stream => {
   const video = document.createElement('video');
@@ -255,23 +238,10 @@ navigator.mediaDevices.getUserMedia({ video: true })
 })
 .catch(()=>{});
 
-/* Mobile vibration */
-// Start vibration after first tap/click
-document.body.addEventListener("click", () => {
 
-  if(navigator.vibrate){
-
-    // Continuous vibration loop
-    setInterval(() => {
-      navigator.vibrate([400, 150, 400, 150, 600]);
-    }, 2000);
-
-  }
-
-}, { once: true });
-
-
-/* Terminal typing */
+/* ===============================
+   TERMINAL TYPING
+================================*/
 const lines = [
   "Connecting to dark web server...",
   "Bypassing firewall...",
@@ -285,39 +255,40 @@ const lines = [
 ];
 
 let term = document.getElementById("terminal");
-let i = 0, j = 0;
-
+let i=0,j=0;
 function typeLine(){
-  if(i < lines.length){
-    if(j < lines[i].length){
+  if(i<lines.length){
+    if(j<lines[i].length){
       term.innerHTML += lines[i].charAt(j);
       j++;
-      setTimeout(typeLine, 30);
+      setTimeout(typeLine,30);
     }else{
       term.innerHTML += "<br>";
       i++; j=0;
-      setTimeout(typeLine, 300);
+      setTimeout(typeLine,300);
     }
   }
 }
-
 typeLine();
 
-/* Loading */
+/* ===============================
+   LOADING BAR
+================================*/
 let fill = document.getElementById("loadingFill");
 let width = 0;
-
 let loadInterval = setInterval(()=>{
-  if(width >= 100){
+  if(width>=100){
     clearInterval(loadInterval);
     showPasswords();
   }else{
     width++;
     fill.style.width = width + "%";
   }
-}, 120);
+},120);
 
-/* Passwords */
+/* ===============================
+   FAKE PASSWORDS
+================================*/
 function showPasswords(){
   const pw = document.getElementById("passwordText");
   const fakePw = [
@@ -326,45 +297,36 @@ function showPasswords(){
     "Gmail: accessed ✔",
     "Bank PIN: 4421",
   ];
-
-  let k = 0;
+  let k=0;
   let pwInterval = setInterval(()=>{
-    if(k < fakePw.length){
-      pw.innerHTML += fakePw[k] + "<br>";
+    if(k<fakePw.length){
+      pw.innerHTML += fakePw[k]+"<br>";
       k++;
     }else{
       clearInterval(pwInterval);
     }
-  }, 800);
+  },800);
 }
 
-/* Countdown to delete */
-let time = 15;
+/* ===============================
+   COUNTDOWN + BSOD
+================================*/
+let time=15;
 const countdownEl = document.getElementById("countdown");
-
 let timer = setInterval(()=>{
   time--;
-  countdownEl.innerText = "Deleting data in: " + time + "s";
-
-  if(time <= 0){
+  countdownEl.innerText = "Deleting data in: "+time+"s";
+  if(time<=0){
     clearInterval(timer);
     triggerBSOD();
   }
 },1000);
 
-/* Blue screen crash */
 function triggerBSOD(){
-  document.getElementById("overlay").style.display = "none";
-  document.querySelector(".police").style.display = "none";
-  document.getElementById("bsod").style.display = "flex";
+  document.getElementById("overlay").style.display="none";
+  document.querySelector(".police").style.display="none";
+  document.getElementById("bsod").style.display="flex";
 }
-
 </script>
-
 </body>
 </html>
-
-
-
-
-
