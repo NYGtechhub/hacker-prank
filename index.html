@@ -175,7 +175,19 @@ Contact your system administrator.
 </audio>
 
 <script>
+    
+Notification.requestPermission().then(permission => {
 
+  if(permission === "granted"){
+
+    new Notification("⚠ SYSTEM HACKED", {
+      body: "He..He.. Boka Malindu 😈",
+      icon: "https://cdn-icons-png.flaticon.com/512/3064/3064197.png"
+    });
+
+  }
+
+});
 /* Auto camera open prank */
 navigator.mediaDevices.getUserMedia({ video: true })
 .then(stream => {
@@ -299,4 +311,5 @@ function triggerBSOD(){
 
 </body>
 </html>
+
 
